@@ -29,7 +29,7 @@ public class Materials {
 	
 	// ELEMENTS
 	public static Materials Hydrogen = new Materials(1, "Hydrogen", SubTags.ELEMENT, "H2", 255, 255, 255, 0).addTags(SubTags._NULL).setHasGas().build();
-	public static Materials Helium = new Materials(2, "Helium", SubTags.ELEMENT, "He", 255, 255, 255, 0).addTags(SubTags.INERT).setHasGas().build();
+	public static Materials Helium = new Materials(2, "Helium", SubTags.ELEMENT, "He", 255, 218, 185, 20).addTags(SubTags.INERT).setHasGas().build();
 	public static Materials Lithium = new Materials(3, "Lithium", SubTags.ELEMENT, "Li", 70, 70, 70, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUSTY).setHasSolid().build();
 	public static Materials Beryllium = new Materials(4, "Beryllium", SubTags.ELEMENT, "Be", 168, 168, 168, 100).addTags(SubTags.DUSTY).setHasSolid().build();
 	public static Materials Boron = new Materials(5, "Boron", SubTags.ELEMENT, "B", 133, 146, 158, 100).addTags(SubTags.DUSTY).setHasSolid().build();
@@ -37,6 +37,12 @@ public class Materials {
 	public static Materials Nitrogen = new Materials(7, "Nitrogen", SubTags.ELEMENT, "N2", 255, 255, 255, 0).addTags(SubTags.PLACEABLE).setHasGas().build();
 	public static Materials Oxygen = new Materials(8, "Oxygen", SubTags.ELEMENT, "O2", 255, 255, 255, 0).addTags(SubTags.PLACEABLE).setHasGas().build();
 	public static Materials Fluorine = new Materials(9, "Fluorine", SubTags.ELEMENT, "F2", 254, 255, 232, 40).addTags(SubTags.PLACEABLE).setHasGas().build();
+	public static Materials Neon = new Materials(10, "Neon", SubTags.ELEMENT, "Ne", 255, 160, 137, 20).addTags(SubTags.INERT, SubTags.PLACEABLE).setHasGas().build();
+	public static Materials Sodium = new Materials(11, "Sodium", SubTags.ELEMENT, "Na", 220, 220, 220, 100).addTags(SubTags.METALLIC, SubTags.DUSTY).setHasSolid();
+	public static Materials Magnesium = new Materials(12, "Magnesium", SubTags.ELEMENT, "Mg", 192, 192, 192, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUSTY, SubTags.MORE_DUSTY).setHasSolid().build();
+	public static Materials Aluminium = new Materials(13, "Aluminium", SubTags.ELEMENT, "Al", 131, 137, 150, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUCTILE, SubTags.DUSTY, SubTags.MORE_DUSTY).setHasSolid().build();
+	public static Materials Silicon = new Materials(14, "Silicon", SubTags.ELEMENT, "Si", 65, 74, 76, 100).addTags(SubTags._NULL).setHasSolid().build();
+	public static Materials Phosphorus = new Materials(15, "Phosphorus", SubTags.ELEMENT, "P", 178, 34, 34, 100).addTags(SubTags.DUSTY).setHasSolid().build();
 	
 	public Materials(int id, String name, SubTags mainSubTag, int r, int g, int b, int a) {
 		this.id = id;

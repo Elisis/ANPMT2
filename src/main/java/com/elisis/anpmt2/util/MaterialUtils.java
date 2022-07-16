@@ -64,6 +64,9 @@ public class MaterialUtils {
 		int temperature = (!(mat.getSublimationPoint() > 0) ? mat.getBoilingPoint() : mat.getSublimationPoint()) + 20; //Take sublimation point if it exists, boils otherwise
 		boolean generateBlock = (mat.contains(SubTags.PLACEABLE) ? true : false);
 		
+		int density = (mat.getId() > 2 ? 1 : -1); //IDs below 2 flow upwards. Note that this allows for negative IDs
+		ANPMT2.LOGGER.warn("Mat ID = " + mat.getId());
+		
 		int r = mat.getRGBA()[0];
 		int g = mat.getRGBA()[1];
 		int b = mat.getRGBA()[2];	
@@ -72,7 +75,7 @@ public class MaterialUtils {
 		//Conditions here
 		
 		ExtendedFluid gasGenerated = (ExtendedFluid) new ExtendedFluid("gas" + mat.getName(), new ResourceLocation(ANPMT2.MODID, "gas" + mat.getName() + ".still"), new ResourceLocation(ANPMT2.MODID, "gas" + mat.getName() + ".flow"))
-				.setGenerateBlock(generateBlock).setDensity(1).setGaseous(true).setTemperature(temperature).setColor(new Color(r, g, b, a));
+				.setGenerateBlock(generateBlock).setDensity(density).setGaseous(true).setTemperature(temperature).setColor(new Color(r, g, b, a));
 		
 		FLUIDS_TO_REGISTER.add(gasGenerated);
 		/*
