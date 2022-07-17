@@ -43,6 +43,14 @@ public class MaterialLoader {
 			MaterialUtils.generatePlate(mat);
 		}
 		
+		if (mat.contains(SubTags.DUSTY)) {
+			MaterialUtils.generateDust(mat);
+			
+			if (mat.contains(SubTags.MORE_DUSTY)) {
+				MaterialUtils.generateFineDust(mat);
+			}
+		}
+		
 		if (mat.contains(SubTags.MINABLE)) {
 			MaterialUtils.generateOre(mat);
 		}

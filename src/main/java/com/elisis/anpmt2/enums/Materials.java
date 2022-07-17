@@ -42,7 +42,8 @@ public class Materials {
 	public static Materials Magnesium = new Materials(12, "Magnesium", SubTags.ELEMENT, "Mg", 192, 192, 192, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUSTY, SubTags.MORE_DUSTY).setHasSolid().build();
 	public static Materials Aluminium = new Materials(13, "Aluminium", SubTags.ELEMENT, "Al", 131, 137, 150, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUCTILE, SubTags.DUSTY, SubTags.MORE_DUSTY).setHasSolid().build();
 	public static Materials Silicon = new Materials(14, "Silicon", SubTags.ELEMENT, "Si", 65, 74, 76, 100).addTags(SubTags._NULL).setHasSolid().build();
-	public static Materials Phosphorus = new Materials(15, "Phosphorus", SubTags.ELEMENT, "P", 178, 34, 34, 100).addTags(SubTags.DUSTY).setHasSolid().build();
+	public static Materials Phosphorus = new Materials(15, "Red Phosphorus", SubTags.ELEMENT, "P", 178, 34, 34, 100).addTags(SubTags.DUSTY).setHasSolid().build();
+	public static Materials Sulfur = new Materials(16, "Sulfur", SubTags.ELEMENT, "S8", 241, 221, 56, 90).addTags(SubTags.DUSTY).setHasSolid().build();
 	
 	public Materials(int id, String name, SubTags mainSubTag, int r, int g, int b, int a) {
 		this.id = id;

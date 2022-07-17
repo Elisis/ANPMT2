@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 
 import com.elisis.anpmt2.enums.Materials;
+import com.elisis.anpmt2.util.MaterialUtils;
 
 @Mod(modid = ANPMT2.MODID, name = ANPMT2.NAME, version = ANPMT2.VERSION)
 public class ANPMT2
@@ -18,6 +19,8 @@ public class ANPMT2
     public static final String VERSION = "1.0";
 
     public static Logger LOGGER;
+    
+    public static final MaterialCreativeTab materialTab = new MaterialCreativeTab();
 
     static {
     	FluidRegistry.enableUniversalBucket();
@@ -36,5 +39,6 @@ public class ANPMT2
     {
         // some example code
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+        LOGGER.warn("Getting object " + MaterialUtils.getItem(Materials.Aluminium, "ingot").getUnlocalizedName());
     }
 }

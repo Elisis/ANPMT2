@@ -12,7 +12,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.BlockFluidFinite;
 
 public class MaterialUtils {
 
@@ -24,11 +23,10 @@ public class MaterialUtils {
 	private static LinkedHashSet<ExtendedFluid> FLUIDS_TO_REGISTER = new LinkedHashSet<>();
 	
 	public static void generateIngot(Materials mat) {
-		ANPMT2.LOGGER.warn("Registering");
-		Item itemGenerated = new Item().setRegistryName(ANPMT2.MODID, "ingot" + mat.getName()).setUnlocalizedName("ingot." + mat.getName().toLowerCase());
+		ANPMT2.LOGGER.warn("Registering ingot" + mat.getName());
+		Item itemGenerated = new ExtendedItem().setMatName(mat.getName()).setTypeName("ingot").setRegistryName(ANPMT2.MODID, "ingot." + mat.getName().replace(" ", "")).setUnlocalizedName("ingot." + mat.getName().toLowerCase()).setCreativeTab(ANPMT2.materialTab);
+		//Item itemGenerated = new Item().setRegistryName(ANPMT2.MODID, "ingot." + mat.getName()).setUnlocalizedName("ingot." + mat.getName().toLowerCase()).setCreativeTab(ANPMT2.materialTab);
 		ITEMS_TO_REGISTER.add(itemGenerated);
-		
-		//RegistryObject<Item> ingot = MaterialsLoader.ITEMS.register("ingot" + mat.getName(), () -> new Item(new Item.Properties())); //e.g. ingotCopper
 
 	}
 	
@@ -36,13 +34,23 @@ public class MaterialUtils {
 		
 	}
 	
-	public static void generateDust() {
+	public static void generateDust(Materials mat) {
 		
+		Item itemGenerated = new ExtendedItem().setMatName(mat.getName()).setTypeName("dust").setRegistryName(ANPMT2.MODID, "dust." + mat.getName().replace(" ", "")).setUnlocalizedName("dust." + mat.getName().toLowerCase()).setCreativeTab(ANPMT2.materialTab);
+		//Item itemGenerated = new Item().setRegistryName(ANPMT2.MODID, "dust." + mat.getName()).setUnlocalizedName("dust." + mat.getName().toLowerCase()).setCreativeTab(ANPMT2.materialTab);
+		ITEMS_TO_REGISTER.add(itemGenerated);
+		
+	}
+	
+	public static void generateFineDust(Materials mat) {
+		
+		Item itemGenerated = new Item().setRegistryName(ANPMT2.MODID, "fineDust." + mat.getName()).setUnlocalizedName("finedust." + mat.getName().replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
+		ITEMS_TO_REGISTER.add(itemGenerated);
 	}
 	
 	public static void generateOre(Materials mat) {
 		
-		Block oreGenerated = new Block(Material.ROCK).setRegistryName(ANPMT2.MODID, "ore" + mat.getName())
+		Block oreGenerated = new Block(Material.ROCK).setRegistryName(ANPMT2.MODID, "ore." + mat.getName())
 				.setUnlocalizedName("ore." + mat.getName().toLowerCase());
 		Item itemBlock = makeItemBlock(oreGenerated);
 		
@@ -74,7 +82,7 @@ public class MaterialUtils {
 		
 		//Conditions here
 		
-		ExtendedFluid gasGenerated = (ExtendedFluid) new ExtendedFluid("gas" + mat.getName(), new ResourceLocation(ANPMT2.MODID, "gas" + mat.getName() + ".still"), new ResourceLocation(ANPMT2.MODID, "gas" + mat.getName() + ".flow"))
+		ExtendedFluid gasGenerated = (ExtendedFluid) new ExtendedFluid("gas." + mat.getName(), new ResourceLocation(ANPMT2.MODID, "gas." + mat.getName() + ".still"), new ResourceLocation(ANPMT2.MODID, "gas." + mat.getName() + ".flow"))
 				.setGenerateBlock(generateBlock).setDensity(density).setGaseous(true).setTemperature(temperature).setColor(new Color(r, g, b, a));
 		
 		FLUIDS_TO_REGISTER.add(gasGenerated);
@@ -129,6 +137,10 @@ public class MaterialUtils {
 			return null;
 		}
 		
+	}
+	
+	public static Item getItem(Materials mat, String type) {
+		return Item.REGISTRY.getObject(new ResourceLocation(ANPMT2.MODID, type + "." + mat.getName())); //e.g. anpmt2:dust.aluminium
 	}
 	
 }

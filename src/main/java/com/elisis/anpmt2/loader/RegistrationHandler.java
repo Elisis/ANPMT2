@@ -50,9 +50,9 @@ public class RegistrationHandler {
 		for (ExtendedFluid fluid : fluidRegisterArray) {
 			if (fluid.getGenerateBlock()) {
 				ANPMT2.LOGGER.warn("A1 " + fluid.getName());
-				Block fluidBlock = new BlockFluidClassic(fluid, Material.WATER).setRegistryName(ANPMT2.MODID, "gas" + fluid.getName());
+				Block fluidBlock = new BlockFluidClassic(fluid, Material.WATER).setRegistryName(ANPMT2.MODID, fluid.getName()); //e.g. gas.hydrogen
 				event.getRegistry().register(fluidBlock);
-				ANPMT2.LOGGER.warn("Placeable gas: " + fluidBlock.getUnlocalizedName());
+				ANPMT2.LOGGER.warn("Placeable gas: " + fluidBlock.getRegistryName());
 				
 			}
 		}

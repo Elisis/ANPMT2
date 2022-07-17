@@ -14,6 +14,8 @@ public enum SubTags {
 	DUSTY, //Dust/Powder
 	MORE_DUSTY, //Fine dust
 	MINABLE, //Direct ore
+	
+	
 	PLACEABLE, //Fluid can be placed in-world
 	;
 	
