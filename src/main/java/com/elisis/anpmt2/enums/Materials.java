@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 
 import com.elisis.anpmt2.ANPMT2;
 import com.elisis.anpmt2.loader.MaterialLoader;
+import com.elisis.anpmt2.util.MaterialUtils;
 
 public class Materials {
 
@@ -33,7 +34,7 @@ public class Materials {
 	public static Materials Lithium = new Materials(3, "Lithium", SubTags.ELEMENT, "Li", 70, 70, 70, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUSTY).setHasSolid().build();
 	public static Materials Beryllium = new Materials(4, "Beryllium", SubTags.ELEMENT, "Be", 168, 168, 168, 100).addTags(SubTags.DUSTY).setHasSolid().build();
 	public static Materials Boron = new Materials(5, "Boron", SubTags.ELEMENT, "B", 133, 146, 158, 100).addTags(SubTags.DUSTY).setHasSolid().build();
-	public static Materials Carbon = new Materials(6, "Carbon", SubTags.ELEMENT, "C", 23, 32, 42, 100).addTags(SubTags.DUSTY, SubTags.MORE_DUSTY).setHasSolid().build();
+	public static Materials Carbon = new Materials(6, "Carbon", SubTags.ELEMENT, "C", 23, 32, 42, 100).addTags(SubTags.DUSTY, SubTags.MORE_DUSTY, SubTags.MINABLE).setHasSolid().build();
 	public static Materials Nitrogen = new Materials(7, "Nitrogen", SubTags.ELEMENT, "N2", 255, 255, 255, 0).addTags(SubTags.PLACEABLE).setHasGas().build();
 	public static Materials Oxygen = new Materials(8, "Oxygen", SubTags.ELEMENT, "O2", 255, 255, 255, 0).addTags(SubTags.PLACEABLE).setHasGas().build();
 	public static Materials Fluorine = new Materials(9, "Fluorine", SubTags.ELEMENT, "F2", 254, 255, 232, 40).addTags(SubTags.PLACEABLE).setHasGas().build();
@@ -42,8 +43,16 @@ public class Materials {
 	public static Materials Magnesium = new Materials(12, "Magnesium", SubTags.ELEMENT, "Mg", 192, 192, 192, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUSTY, SubTags.MORE_DUSTY).setHasSolid().build();
 	public static Materials Aluminium = new Materials(13, "Aluminium", SubTags.ELEMENT, "Al", 131, 137, 150, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUCTILE, SubTags.DUSTY, SubTags.MORE_DUSTY).setHasSolid().build();
 	public static Materials Silicon = new Materials(14, "Silicon", SubTags.ELEMENT, "Si", 65, 74, 76, 100).addTags(SubTags._NULL).setHasSolid().build();
-	public static Materials Phosphorus = new Materials(15, "Red Phosphorus", SubTags.ELEMENT, "P", 178, 34, 34, 100).addTags(SubTags.DUSTY).setHasSolid().build();
+	public static Materials RedPhosphorus = new Materials(15, "Red Phosphorus", SubTags.ELEMENT, "P", 178, 34, 34, 100).addTags(SubTags.DUSTY).setHasSolid().build();
 	public static Materials Sulfur = new Materials(16, "Sulfur", SubTags.ELEMENT, "S8", 241, 221, 56, 90).addTags(SubTags.DUSTY).setHasSolid().build();
+	public static Materials Chlorine = new Materials(17, "Chlorine", SubTags.ELEMENT, "Cl2", 255, 255, 204, 40).addTags(SubTags._NULL).setHasGas().build();
+	public static Materials Argon = new Materials(18, "Argon", SubTags.ELEMENT, "Ar", 255, 255, 255, 0).addTags(SubTags.INERT).setHasGas().build();
+	public static Materials Potassium = new Materials(19, "Potassium", SubTags.ELEMENT, "K", 122, 137, 140, 100).addTags(SubTags._NULL).setHasSolid().build();
+	public static Materials Calcium = new Materials(20, "Calcium", SubTags.ELEMENT, "Ca", 245, 245, 245, 100).addTags(SubTags._NULL).setHasSolid().build();
+	public static Materials Scandium = new Materials(21, "Scandium", SubTags.ELEMENT, "Sc", 211, 211, 211, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUCTILE, SubTags.DUSTY).setHasSolid().build();
+	public static Materials Titanium = new Materials(22, "Titanium", SubTags.ELEMENT, "Ti", 200, 200, 210, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUCTILE, SubTags.DUSTY).setHasSolid().build();
+	
+	
 	
 	public Materials(int id, String name, SubTags mainSubTag, int r, int g, int b, int a) {
 		this.id = id;
@@ -165,7 +174,15 @@ public class Materials {
 	public static void init() {
 		
 		ANPMT2.LOGGER.warn("Registered a total of " + MATERIALS_MAP.values().size() + " materials!\n");
+		
+		long startTime = System.currentTimeMillis();
 		MaterialLoader.init();
+		long endTime = System.currentTimeMillis();
+		
+		long duration = (endTime - startTime);
+		
+		ANPMT2.LOGGER.warn("[[Assembled a total of " + MaterialUtils.getItemsToRegisterArray().length + " items!]]");
+		ANPMT2.LOGGER.warn("[[Assembly took " + (duration) + "ms]]");
 		
 	}
 	

@@ -2,19 +2,23 @@ package com.elisis.anpmt2.util;
 
 import java.util.Locale;
 
-import com.elisis.anpmt2.ANPMT2;
-
-import net.minecraft.item.Item;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 
-public class ExtendedItem extends Item {
-	
+public class ExtendedBlock extends Block {
+
 	private String matName;
 	private String typeName;
 	private String humanTypeName;
 	
+	public ExtendedBlock(Material materialIn) {
+		super(materialIn);
+		
+	}
+	
 	@Override
-	public String getItemStackDisplayName(ItemStack stack) { //This is lazy, need to implement some kind of config that changes display depending on lang
+	public String getLocalizedName() { //This is lazy, need to implement some kind of config that changes display depending on lang
         
 		//ANPMT2.LOGGER.warn(this.getRegistryName());
 		//ANPMT2.LOGGER.warn("matName: " + matName);
@@ -22,22 +26,27 @@ public class ExtendedItem extends Item {
 		String capitalMatName = matName.substring(0, 1).toUpperCase(Locale.ROOT) + matName.substring(1);
         //String capitalTypeName = typeName.substring(0, 1).toUpperCase() + typeName.substring(1);
         
-        return capitalMatName + " " + humanTypeName; //e.g. Aluminium Dust
-    }
+        return capitalMatName + " " + humanTypeName; //e.g. Aluminium 12ga Wire
+    
+	}
 	
-	public ExtendedItem setMatName(String matName) {
+	public ExtendedBlock setMatName(String matName) {
 		this.matName = matName;
 		return this;
 	}
 	
-	public ExtendedItem setTypeName(String typeName) {
+	public ExtendedBlock setTypeName(String typeName) {
 		this.typeName = typeName;
 		return this;
 	}
 	
-	public ExtendedItem setHumanTypeName(String humanTypeName) {
+	public ExtendedBlock setHumanTypeName(String humanTypeName) {
 		this.humanTypeName = humanTypeName;
 		return this;
+	}
+	
+	public String getMatName() {
+		return this.matName;
 	}
 	
 	public String getTypeName() {

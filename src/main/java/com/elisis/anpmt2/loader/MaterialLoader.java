@@ -28,7 +28,7 @@ public class MaterialLoader {
 			
 		}
 		
-		RegistrationHandler.registerFluids();
+		//RegistrationHandler.registerFluids();
 	}
 	
 	
@@ -49,6 +49,11 @@ public class MaterialLoader {
 			if (mat.contains(SubTags.MORE_DUSTY)) {
 				MaterialUtils.generateFineDust(mat);
 			}
+		}
+		
+		if (mat.contains(SubTags.DUCTILE)) {
+			MaterialUtils.generateWires(mat);
+			MaterialUtils.generateWireBlock(mat);
 		}
 		
 		if (mat.contains(SubTags.MINABLE)) {
