@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.elisis.anpmt2.ANPMT2;
 import com.elisis.anpmt2.gentype.Isotope;
+import com.elisis.anpmt2.gentype.IsotopeBuilder;
 import com.elisis.anpmt2.item.Items;
 import com.elisis.anpmt2.loader.MaterialLoader;
 import com.elisis.anpmt2.util.MaterialUtils;
@@ -33,8 +34,18 @@ public class Materials {
 	public static final LinkedHashMap<String, Materials> MATERIALS_MAP = new LinkedHashMap<>();
 	
 	// ELEMENTS
-	public static Materials Hydrogen = new Materials(1, "Hydrogen", SubTags.ELEMENT, "H2", 255, 255, 255, 0).addTags(SubTags._NULL).setHasGas().addIsotopes(1, new int[] {1, 2, 3}).build();
-	public static Materials Helium = new Materials(2, "Helium", SubTags.ELEMENT, "He", 255, 218, 185, 20).addTags(SubTags.INERT).setHasGas().addIsotopes(2, new int[] {3, 4, 6}).build();
+	//public static Materials Hydrogen = new Materials(1, "Hydrogen", SubTags.ELEMENT, "H2", 255, 255, 255, 0).addTags(SubTags._NULL).setHasGas().addIsotopes(1, new int[] {1, 2, 3}).build();
+	public static Materials Hydrogen = new Materials(1, "Hydrogen", SubTags.ELEMENT, "H2", 255, 255, 255, 0).addTags(SubTags._NULL).setHasGas()
+			.addIsotopes(1, 
+					IsotopeBuilder.createGeneric(1, 1).finalise(), IsotopeBuilder.createGeneric(1, 2).finalise(), IsotopeBuilder.createGeneric(1, 3).finalise())
+						.build();
+	
+	
+	
+	public static Materials Helium = new Materials(2, "Helium", SubTags.ELEMENT, "He", 255, 218, 185, 20).addTags(SubTags.INERT).setHasGas()
+			.addIsotopes(2, IsotopeBuilder.createGeneric(1, 3).finalise(), IsotopeBuilder.createGeneric(1, 4).finalise(), IsotopeBuilder.createGeneric(1, 6).finalise())
+				.build();
+	
 	public static Materials Lithium = new Materials(3, "Lithium", SubTags.ELEMENT, "Li", 70, 70, 70, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUSTY).setHasSolid().build();
 	public static Materials Beryllium = new Materials(4, "Beryllium", SubTags.ELEMENT, "Be", 168, 168, 168, 100).addTags(SubTags.DUSTY).setHasSolid().build();
 	public static Materials Boron = new Materials(5, "Boron", SubTags.ELEMENT, "B", 133, 146, 158, 100).addTags(SubTags.DUSTY).setHasSolid().build();
@@ -181,9 +192,18 @@ public class Materials {
 	public boolean contains(SubTags tag) {
         return this.subTags.contains(tag);
     }
-	
+	/*
 	private Materials addIsotopes(int atomicNumber, int[] atomicWeights) {
 		this.isotopes = Isotope.createIsotopes(this, atomicNumber, atomicWeights);
+		return this;
+	}
+	*/
+	private Materials addIsotopes(int atomicNumber, Isotope... isotopes) {
+		for (Isotope isotope : isotopes) {
+			isotope = isotope.setAssociatedMaterial(this);
+			isotope.setName(this.getName() + "-" + isotope.getAtomicWeight());
+			this.isotopes.put(isotope.getName(), isotope);
+		}
 		return this;
 	}
 	
@@ -214,6 +234,8 @@ public class Materials {
 					.addTags(assMaterial.getSubTags().toArray(new SubTags[0])).setStatesToGenerate(assMaterial.getStatesToGenerate());
 		return materialObject;
 	}
+	
+	
 	
 	
 	

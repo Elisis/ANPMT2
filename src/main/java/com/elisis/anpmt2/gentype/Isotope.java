@@ -9,11 +9,21 @@ public class Isotope {
 	private int atomicNumber;
 	private int atomicWeight;
 	private Materials associatedMaterial;
+	private String name;
 	
-	private Isotope(Materials material, int atomicNumber, int atomicWeight) {
+	private boolean active;
+	private int halfLife;
+	
+	Isotope(Materials material, int atomicNumber, int atomicWeight) {
 		this.atomicNumber = atomicNumber;
-		this.atomicNumber = atomicWeight;
+		this.atomicWeight = atomicWeight;
 		this.associatedMaterial = material;
+		this.name = material.getName() + "-" + atomicWeight; //E.g. Sodium-22
+	}
+	
+	Isotope(int atomicNumber, int atomicWeight) {
+		this.atomicNumber = atomicNumber;
+		this.atomicWeight = atomicWeight;
 	}
 	
 	public static LinkedHashMap<String, Isotope> createIsotopes(Materials material, int atomicNumber, int[] atomicWeights) {
@@ -41,8 +51,43 @@ public class Isotope {
 		return this.atomicWeight;
 	}
 	
+	public Isotope setAssociatedMaterial(Materials material) {
+		this.associatedMaterial = material;
+		this.name = material.getName() + "-" + this.atomicWeight; //E.g. Sodium-22
+		return this;
+	}
+	
 	public Materials getAssociatedMaterial() {
 		return this.associatedMaterial;
 	}
+	
+	Isotope setRadioactive(boolean active) {
+		this.active = active;
+		return this;
+	}
+	
+	public boolean getRadioactive() {
+		return this.active;
+	}
+	
+	Isotope setHalfLife(int hl) {
+		this.halfLife = hl;
+		return this;
+	}
+	
+	public int getHalfLife() {
+		return this.halfLife;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public Isotope setName(String name) {
+		this.name = name;
+		return this;
+	}
+	
+	
 	 
 }
