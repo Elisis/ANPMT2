@@ -1,13 +1,11 @@
 package com.elisis.anpmt2;
 
-import java.util.Arrays;
-
 import com.elisis.anpmt2.enums.Materials;
-import com.elisis.anpmt2.util.ExtendedItem;
 import com.elisis.anpmt2.util.MaterialUtils;
+import com.elisis.anpmt2.util.TabAlphaComparator;
+import com.elisis.anpmt2.util.TabNumberComparator;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,8 +38,14 @@ public class MaterialCreativeTab extends CreativeTabs {
 		}
 		
 		//for (ExtendedItem item : Item.REGISTRY)
-        //items.sort(new TabAlphaComparator()/*.thenComparing(new TabNumberComparator())*/); //More hacky shite. Sorts by alpha, then numerically
+        items.sort(new TabAlphaComparator().thenComparing(new TabNumberComparator())); //More hacky shite. Sorts by alpha, then numerically
         //ANPMT2.LOGGER.warn(Arrays.toString(items.toArray()));
+    }
+	
+	@Override
+	public boolean hasSearchBar()
+    {
+        return true;
     }
 		
 }
