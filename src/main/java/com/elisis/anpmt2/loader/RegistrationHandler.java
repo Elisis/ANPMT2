@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import com.elisis.anpmt2.ANPMT2;
+import com.elisis.anpmt2.block.BlockDewarTier1;
 import com.elisis.anpmt2.item.Items;
+import com.elisis.anpmt2.tile.TileDewarTier1;
 import com.elisis.anpmt2.util.ExtendedBlock;
 import com.elisis.anpmt2.util.ExtendedFluid;
 import com.elisis.anpmt2.util.ExtendedItem;
@@ -14,11 +16,14 @@ import com.elisis.anpmt2.util.MaterialUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @EventBusSubscriber(modid = ANPMT2.MODID)
 public class RegistrationHandler {
@@ -42,6 +47,8 @@ public class RegistrationHandler {
 			ANPMT2.LOGGER.warn("In RegHandler Registering " + Arrays.toString(itemBlockRegisterArray));
 			event.getRegistry().registerAll(itemBlockRegisterArray);
 		}	
+		
+		event.getRegistry().register(new ItemBlock(new BlockDewarTier1(Material.IRON)).setRegistryName(new ResourceLocation(ANPMT2.MODID, "dewar.1")).setUnlocalizedName("dewar.1")); //Should probably go elsewhere
 		
 		if (!Objects.isNull(Items.ampoules)) {
 			event.getRegistry().registerAll((Item[]) Items.ampoules.values().toArray(new Item[0]));
@@ -73,6 +80,10 @@ public class RegistrationHandler {
 				
 			}
 		}
+		
+		GameRegistry.registerTileEntity(TileDewarTier1.class, new ResourceLocation(ANPMT2.MODID, "dewar.1"));
+		event.getRegistry().register(new BlockDewarTier1(Material.IRON));
+		
 	}
 	
 	public static void registerFluids() {

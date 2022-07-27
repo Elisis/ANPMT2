@@ -22,10 +22,10 @@ public class Items {
 		
 		for (int i = 10; i <= 50; i += 10) { //10..50mB
 			QuartzAmpoule ampoule = new QuartzAmpoule(i) {
-				@Override
+				/*@Override
 				public String getItemStackDisplayName(ItemStack stack) { //Lazy awful solution
 			        return "Quartz Ampoule " + this.getCapacity() + "mB";
-			    }
+			    }*/
 			};
 			ampoules.put(i, ampoule);
 			ANPMT2.LOGGER.warn("Added ampoule of capacity " + i + "mB");

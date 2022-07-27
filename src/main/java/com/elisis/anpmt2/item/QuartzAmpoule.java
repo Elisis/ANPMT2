@@ -3,9 +3,9 @@ package com.elisis.anpmt2.item;
 import java.util.Objects;
 
 import com.elisis.anpmt2.ANPMT2;
+import com.elisis.anpmt2.util.ExtendedItem;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.Fluid;
@@ -13,10 +13,12 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
-public class QuartzAmpoule extends Item {
+public class QuartzAmpoule extends ExtendedItem {
 	
 	private int capacity = 0; //in mB
 	private boolean decays = false;
+	
+	//We take mB to mean mL. I know it's not totally sensical but it's the least annoying interpretation
 	
 	public QuartzAmpoule(int capacity) {
 		super();
@@ -26,6 +28,9 @@ public class QuartzAmpoule extends Item {
 		this.setRegistryName("ampoule" + "." + capacity);
 		this.setMaxStackSize(64);
 		this.setCreativeTab(ANPMT2.fluidTab);
+		this.setTypeName("empty");
+		this.setMatName("Quartz Ampoule " + capacity + "mB");
+		this.setHumanTypeName("- Empty");
 	}
 	
 	public int getCapacity() {
@@ -45,7 +50,7 @@ public class QuartzAmpoule extends Item {
 			subItems.add(QuartzAmpoule.getFilledAmpoules(fluid, this.capacity, 1).setStackDisplayName("Quartz Ampoule " + this.capacity + "mB - " + fluid.getName())); //Italic for some reason
 			
 			//subItems.add(QuartzAmpoule.getFilledAmpoules(fluid, this.capacity, 1));
-			ANPMT2.LOGGER.warn("Added subItem ampoule " + fluid.getName());
+			//ANPMT2.LOGGER.warn("Added subItem ampoule " + fluid.getName());
 		}
 	}
 

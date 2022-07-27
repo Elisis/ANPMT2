@@ -8,13 +8,11 @@ import java.util.Objects;
 import com.elisis.anpmt2.ANPMT2;
 import com.elisis.anpmt2.enums.Materials;
 import com.elisis.anpmt2.enums.SubTags;
+import com.elisis.anpmt2.gentype.Isotope;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 
 public class MaterialUtils {
@@ -32,21 +30,21 @@ public class MaterialUtils {
 	
 	public static void generateIngot(Materials mat) {
 		ANPMT2.LOGGER.warn("Registering ingot" + mat.getName());
-		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("ingot").setHumanTypeName("Ingot").setRegistryName(ANPMT2.MODID, "ingot." + mat.getName().replace(" ", "")).setUnlocalizedName("ingot." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
+		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("ingot").setHumanTypeName("Ingot").setTooltip(mat.getSubscript()).setRegistryName(ANPMT2.MODID, "ingot." + mat.getName().replace(" ", "")).setUnlocalizedName("ingot." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
 		//Item itemGenerated = new Item().setRegistryName(ANPMT2.MODID, "ingot." + mat.getName()).setUnlocalizedName("ingot." + mat.getName().toLowerCase()).setCreativeTab(ANPMT2.materialTab);
 		ITEMS_TO_REGISTER.add(itemGenerated);
 
 	}
 	
 	public static void generatePlate(Materials mat) {
-		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("plate").setHumanTypeName("Plate").setRegistryName(ANPMT2.MODID, "plate." + mat.getName().replace(" ", "")).setUnlocalizedName("plate." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
+		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("plate").setHumanTypeName("Plate").setTooltip(mat.getSubscript()).setRegistryName(ANPMT2.MODID, "plate." + mat.getName().replace(" ", "")).setUnlocalizedName("plate." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
 		//Item itemGenerated = new Item().setRegistryName(ANPMT2.MODID, "ingot." + mat.getName()).setUnlocalizedName("ingot." + mat.getName().toLowerCase()).setCreativeTab(ANPMT2.materialTab);
 		ITEMS_TO_REGISTER.add(itemGenerated);
 	}
 	
 	public static void generateDust(Materials mat) {
 		
-		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("dust").setHumanTypeName("Dust").setRegistryName(ANPMT2.MODID, "dust." + mat.getName().replace(" ", "")).setUnlocalizedName("dust." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
+		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("dust").setHumanTypeName("Dust").setTooltip(mat.getSubscript()).setRegistryName(ANPMT2.MODID, "dust." + mat.getName().replace(" ", "")).setUnlocalizedName("dust." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
 		//Item itemGenerated = new Item().setRegistryName(ANPMT2.MODID, "dust." + mat.getName()).setUnlocalizedName("dust." + mat.getName().toLowerCase()).setCreativeTab(ANPMT2.materialTab);
 		ITEMS_TO_REGISTER.add(itemGenerated);
 		
@@ -56,6 +54,7 @@ public class MaterialUtils {
 		
 		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem()
 				.setMatName(mat.getName()).setTypeName("powder").setHumanTypeName("Powder")
+				.setTooltip(mat.getSubscript())
 				.setRegistryName(ANPMT2.MODID, "powder." + mat.getName().replace(" ", ""))
 				.setUnlocalizedName("powder." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", ""))
 				.setCreativeTab(ANPMT2.materialTab);
@@ -76,7 +75,7 @@ public class MaterialUtils {
 			ITEMS_TO_REGISTER.add(itemGenerated);
 		}
 		*/
-		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("finewire").setHumanTypeName("Fine Wire").setRegistryName(ANPMT2.MODID, "finewire." + mat.getName().replace(" ", "")).setUnlocalizedName("finewire." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
+		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("finewire").setHumanTypeName("Fine Wire").setTooltip(mat.getSubscript()).setRegistryName(ANPMT2.MODID, "finewire." + mat.getName().replace(" ", "")).setUnlocalizedName("finewire." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
 		ITEMS_TO_REGISTER.add(itemGenerated);
 	}
 	
@@ -136,7 +135,7 @@ public class MaterialUtils {
 		
 		//Conditions here
 		
-		ExtendedFluid gasGenerated = (ExtendedFluid) new ExtendedFluid("gas." + mat.getName().replace(" ", ""), new ResourceLocation(ANPMT2.MODID, "gas." + mat.getName() + ".still"), new ResourceLocation(ANPMT2.MODID, "gas." + mat.getName() + ".flow"))
+		ExtendedFluid gasGenerated = (ExtendedFluid) new ExtendedFluid("gas." + mat.getName().replace(" ", ""), new ResourceLocation(ANPMT2.MODID, "gas." + mat.getName() + ".still"), new ResourceLocation(ANPMT2.MODID, "gas." + mat.getName() + ".flow")).setMatName(mat.getName()).setTypeName("gas").setHumanTypeName("Gas")
 				.setGenerateBlock(generateBlock).setDensity(density).setGaseous(true).setTemperature(temperature).setColor(new Color(r, g, b, a));
 		
 		FLUIDS_TO_REGISTER.add(gasGenerated);

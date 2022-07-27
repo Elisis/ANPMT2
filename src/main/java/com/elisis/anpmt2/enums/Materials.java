@@ -3,8 +3,11 @@ package com.elisis.anpmt2.enums;
 import java.util.BitSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 
 import com.elisis.anpmt2.ANPMT2;
+import com.elisis.anpmt2.gentype.Isotope;
+import com.elisis.anpmt2.item.Items;
 import com.elisis.anpmt2.loader.MaterialLoader;
 import com.elisis.anpmt2.util.MaterialUtils;
 
@@ -16,6 +19,7 @@ public class Materials {
 	private final LinkedHashSet<SubTags> subTags = new LinkedHashSet<>();
 	private final int[] RGBA;
 	private BitSet statesToGenerate = new BitSet(8); // 0:S  1:L  2:G  3:P  4:SF  5-7:Reserved
+	private LinkedHashMap<String, Isotope> isotopes = new LinkedHashMap<>();
 	
 	private String subscript = ""; 
 	
@@ -29,8 +33,8 @@ public class Materials {
 	public static final LinkedHashMap<String, Materials> MATERIALS_MAP = new LinkedHashMap<>();
 	
 	// ELEMENTS
-	public static Materials Hydrogen = new Materials(1, "Hydrogen", SubTags.ELEMENT, "H2", 255, 255, 255, 0).addTags(SubTags._NULL).setHasGas().build();
-	public static Materials Helium = new Materials(2, "Helium", SubTags.ELEMENT, "He", 255, 218, 185, 20).addTags(SubTags.INERT).setHasGas().build();
+	public static Materials Hydrogen = new Materials(1, "Hydrogen", SubTags.ELEMENT, "H2", 255, 255, 255, 0).addTags(SubTags._NULL).setHasGas().addIsotopes(1, new int[] {1, 2, 3}).build();
+	public static Materials Helium = new Materials(2, "Helium", SubTags.ELEMENT, "He", 255, 218, 185, 20).addTags(SubTags.INERT).setHasGas().addIsotopes(2, new int[] {3, 4, 6}).build();
 	public static Materials Lithium = new Materials(3, "Lithium", SubTags.ELEMENT, "Li", 70, 70, 70, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUSTY).setHasSolid().build();
 	public static Materials Beryllium = new Materials(4, "Beryllium", SubTags.ELEMENT, "Be", 168, 168, 168, 100).addTags(SubTags.DUSTY).setHasSolid().build();
 	public static Materials Boron = new Materials(5, "Boron", SubTags.ELEMENT, "B", 133, 146, 158, 100).addTags(SubTags.DUSTY).setHasSolid().build();
@@ -51,6 +55,14 @@ public class Materials {
 	public static Materials Calcium = new Materials(20, "Calcium", SubTags.ELEMENT, "Ca", 245, 245, 245, 100).addTags(SubTags._NULL).setHasSolid().build();
 	public static Materials Scandium = new Materials(21, "Scandium", SubTags.ELEMENT, "Sc", 211, 211, 211, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUCTILE, SubTags.DUSTY).setHasSolid().build();
 	public static Materials Titanium = new Materials(22, "Titanium", SubTags.ELEMENT, "Ti", 200, 200, 210, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUCTILE, SubTags.DUSTY).setHasSolid().build();
+	public static Materials Vanadium = new Materials(23, "Vanadium", SubTags.ELEMENT, "V", 192, 192, 192, 100).addTags(SubTags.DUCTILE).setHasSolid().build();
+	public static Materials Chromium = new Materials(24, "Chromium", SubTags.ELEMENT, "Cr", 216, 216, 216, 100).addTags(SubTags._NULL).setHasSolid().build();
+	public static Materials Manganese = new Materials(25, "Manganese", SubTags.ELEMENT, "Mn", 59, 60, 54, 100).addTags(SubTags.DUSTY).setHasSolid().build();
+	public static Materials Iron = new Materials(26, "Iron", SubTags.ELEMENT, "Fe", 220, 220, 220, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUSTY).setHasSolid().build();
+
+
+
+
 	
 	
 	
@@ -138,6 +150,11 @@ public class Materials {
 		return this.sublimationPoint;
 	}
 	
+	private Materials setStatesToGenerate(BitSet set) {
+		this.statesToGenerate = set;
+		return this;
+	}
+	
 	public BitSet getStatesToGenerate() {
 		return this.statesToGenerate;
 	}
@@ -165,11 +182,40 @@ public class Materials {
         return this.subTags.contains(tag);
     }
 	
+	private Materials addIsotopes(int atomicNumber, int[] atomicWeights) {
+		this.isotopes = Isotope.createIsotopes(this, atomicNumber, atomicWeights);
+		return this;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public LinkedHashMap<String, Isotope> getIsotopes() {
+		return (LinkedHashMap<String, Isotope>) this.isotopes.clone();
+	}
+	
 	private Materials build() {
 		MATERIALS_MAP.put(this.name, this);
 		ANPMT2.LOGGER.warn("Registered material: " + this.getName() + "\n");
+		
+		for (Map.Entry<String, Isotope> entry : this.getIsotopes().entrySet()) {
+			String name = entry.getKey();
+			Isotope isotopeObject = entry.getValue(); 
+			
+			Materials isotopeMaterial = getMaterialObjectFromIsotope(name, isotopeObject);
+			MATERIALS_MAP.put(name, isotopeMaterial);
+		}
+		
+		
 		return this;
 	}
+	
+	private static Materials getMaterialObjectFromIsotope(String name, Isotope iso) {
+		Materials assMaterial = iso.getAssociatedMaterial();
+		Materials materialObject = new Materials(assMaterial.getId(), name, SubTags.ELEMENT, assMaterial.getSubscript(), assMaterial.getRGBA()[0], assMaterial.getRGBA()[1], assMaterial.getRGBA()[2], assMaterial.getRGBA()[3])
+					.addTags(assMaterial.getSubTags().toArray(new SubTags[0])).setStatesToGenerate(assMaterial.getStatesToGenerate());
+		return materialObject;
+	}
+	
+	
 	
 	public static void init() {
 		
@@ -181,7 +227,7 @@ public class Materials {
 		
 		long duration = (endTime - startTime);
 		
-		ANPMT2.LOGGER.warn("[[Assembled a total of " + MaterialUtils.getItemsToRegisterArray().length + " items!]]");
+		ANPMT2.LOGGER.warn("[[Assembled a total of " + MaterialUtils.getItemsToRegisterArray().length + MaterialUtils.getItemBlocksToRegisterArray().length + Items.ampoules.size() + " items!]]");
 		ANPMT2.LOGGER.warn("[[Assembly took " + (duration) + "ms]]");
 		
 	}
