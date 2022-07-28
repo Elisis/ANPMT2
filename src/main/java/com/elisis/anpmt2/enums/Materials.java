@@ -201,7 +201,6 @@ public class Materials {
 	private Materials addIsotopes(int atomicNumber, Isotope... isotopes) {
 		for (Isotope isotope : isotopes) {
 			isotope = isotope.setAssociatedMaterial(this);
-			isotope.setName(this.getName() + "-" + isotope.getAtomicWeight());
 			this.isotopes.put(isotope.getName(), isotope);
 		}
 		return this;

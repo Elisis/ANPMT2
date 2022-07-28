@@ -53,6 +53,8 @@ public class QuartzAmpoule extends ExtendedItem {
 			//ANPMT2.LOGGER.warn("Added subItem ampoule " + fluid.getName());
 		}
 	}
+	
+	
 
 	public static ItemStack getFilledAmpoules(Fluid fluid, int capacity, int count) {
 		Objects.requireNonNull(fluid);

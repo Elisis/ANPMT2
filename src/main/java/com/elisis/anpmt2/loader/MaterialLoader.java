@@ -1,11 +1,8 @@
 package com.elisis.anpmt2.loader;
 
-import java.util.Map;
-
 import com.elisis.anpmt2.ANPMT2;
 import com.elisis.anpmt2.enums.Materials;
 import com.elisis.anpmt2.enums.SubTags;
-import com.elisis.anpmt2.gentype.Isotope;
 import com.elisis.anpmt2.util.MaterialUtils;
 
 public class MaterialLoader {
