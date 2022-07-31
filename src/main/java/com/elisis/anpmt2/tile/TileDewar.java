@@ -10,7 +10,7 @@ public abstract class TileDewar extends TileEntity implements ITickable {
 	public FluidTank tank;
 	
 	@SuppressWarnings("unused")
-	private static int calculateLoss(Fluid fluid, int insulation) {
+	protected static int calculateLoss(Fluid fluid, int insulation) {
 		int loss = (fluid.getTemperature() >= 298 ? (Math.abs((10000*((1/fluid.getTemperature()) * 150)/insulation) + 5)) : 0);
 		return loss;
 	}

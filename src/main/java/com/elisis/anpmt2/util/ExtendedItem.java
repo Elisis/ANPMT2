@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import com.elisis.anpmt2.ANPMT2;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -20,6 +21,11 @@ public class ExtendedItem extends Item implements Nameable<ExtendedItem> {
 	private String humanTypeName;
 	
 	private String tooltip;
+	
+	private int tick = 0;
+	
+	private boolean active;
+	private int halfLife;
 	
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) { //This is lazy, need to implement some kind of config that changes display depending on lang
@@ -66,6 +72,31 @@ public class ExtendedItem extends Item implements Nameable<ExtendedItem> {
 	
 	public String getHumanName() {
 		return this.humanTypeName;
+	}
+	
+	public ExtendedItem setRadioactive(int halfLife) {
+		
+		if (halfLife != 0) {
+			this.active = true;
+			this.halfLife = halfLife;
+		}
+		
+		return this;
+	}
+	
+	@Override
+	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		
+		tick++;
+		if (tick >= this.halfLife) {
+			tick = 0;
+			int count = stack.getCount();
+			
+			stack.setCount((int) Math.floor(count/2)); //If amount is odd, round down
+			
+		}
+		
+		
 	}
 
 }

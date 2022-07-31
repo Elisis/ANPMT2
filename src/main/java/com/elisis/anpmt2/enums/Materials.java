@@ -30,6 +30,9 @@ public class Materials {
 	private int sublimationPoint;
 	
 	
+	private boolean active = false;
+	private int halfLife = 0;
+	
 	
 	public static final LinkedHashMap<String, Materials> MATERIALS_MAP = new LinkedHashMap<>();
 	
@@ -46,7 +49,7 @@ public class Materials {
 			.addIsotopes(2, IsotopeBuilder.createGeneric(1, 3).finalise(), IsotopeBuilder.createGeneric(1, 4).finalise(), IsotopeBuilder.createGeneric(1, 6).finalise())
 				.build();
 	
-	public static Materials Lithium = new Materials(3, "Lithium", SubTags.ELEMENT, "Li", 70, 70, 70, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUSTY).setHasSolid().build();
+	public static Materials Lithium = new Materials(3, "Lithium", SubTags.ELEMENT, "Li", 70, 70, 70, 100).addTags(SubTags.METALLIC, SubTags.WORKABLE, SubTags.DUSTY).setHasSolid().setActive(400).build();
 	public static Materials Beryllium = new Materials(4, "Beryllium", SubTags.ELEMENT, "Be", 168, 168, 168, 100).addTags(SubTags.DUSTY).setHasSolid().build();
 	public static Materials Boron = new Materials(5, "Boron", SubTags.ELEMENT, "B", 133, 146, 158, 100).addTags(SubTags.DUSTY).setHasSolid().build();
 	public static Materials Carbon = new Materials(6, "Carbon", SubTags.ELEMENT, "C", 23, 32, 42, 100).addTags(SubTags.DUSTY, SubTags.MORE_DUSTY, SubTags.MINABLE).setHasSolid().build();
@@ -204,6 +207,20 @@ public class Materials {
 			this.isotopes.put(isotope.getName(), isotope);
 		}
 		return this;
+	}
+	
+	private Materials setActive(int hl) {
+		this.active = true;
+		this.halfLife = hl;
+		return this;
+	}
+	
+	public boolean getActive() {
+		return this.active;
+	}
+	
+	public int getHalfLife() {
+		return this.halfLife;
 	}
 	
 	@SuppressWarnings("unchecked")

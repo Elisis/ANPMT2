@@ -30,14 +30,22 @@ public class MaterialUtils {
 	
 	public static void generateIngot(Materials mat) {
 		ANPMT2.LOGGER.warn("Registering ingot" + mat.getName());
-		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("ingot").setHumanTypeName("Ingot").setTooltip(mat.getSubscript()).setRegistryName(ANPMT2.MODID, "ingot." + mat.getName().replace(" ", "")).setUnlocalizedName("ingot." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
+		int hl = mat.getHalfLife();
+		
+		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("ingot").setHumanTypeName("Ingot").setTooltip(mat.getSubscript()).setRadioactive(hl).setRegistryName(ANPMT2.MODID, "ingot." + mat.getName().replace(" ", "")).setUnlocalizedName("ingot." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab); 
+			
+		//ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("ingot").setHumanTypeName("Ingot").setTooltip(mat.getSubscript()).setRegistryName(ANPMT2.MODID, "ingot." + mat.getName().replace(" ", "")).setUnlocalizedName("ingot." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
+		
+		
 		//Item itemGenerated = new Item().setRegistryName(ANPMT2.MODID, "ingot." + mat.getName()).setUnlocalizedName("ingot." + mat.getName().toLowerCase()).setCreativeTab(ANPMT2.materialTab);
 		ITEMS_TO_REGISTER.add(itemGenerated);
 
 	}
 	
 	public static void generatePlate(Materials mat) {
-		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("plate").setHumanTypeName("Plate").setTooltip(mat.getSubscript()).setRegistryName(ANPMT2.MODID, "plate." + mat.getName().replace(" ", "")).setUnlocalizedName("plate." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
+		int hl = mat.getHalfLife();
+		
+		ExtendedItem itemGenerated = (ExtendedItem) new ExtendedItem().setMatName(mat.getName()).setTypeName("plate").setHumanTypeName("Plate").setTooltip(mat.getSubscript()).setRadioactive(hl).setRegistryName(ANPMT2.MODID, "plate." + mat.getName().replace(" ", "")).setUnlocalizedName("plate." + mat.getName().toLowerCase(Locale.ROOT).replace(" ", "")).setCreativeTab(ANPMT2.materialTab);
 		//Item itemGenerated = new Item().setRegistryName(ANPMT2.MODID, "ingot." + mat.getName()).setUnlocalizedName("ingot." + mat.getName().toLowerCase()).setCreativeTab(ANPMT2.materialTab);
 		ITEMS_TO_REGISTER.add(itemGenerated);
 	}

@@ -1,15 +1,19 @@
 package com.elisis.anpmt2.tile;
 
+import static com.elisis.anpmt2.tile.TileDewar.calculateLoss;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileDewarTier1 extends TileDewar {
 	
+	private int tick;
 	
 	private int insulation;
 	public FluidTank tank = new FluidTank(100_000);
@@ -37,8 +41,21 @@ public class TileDewarTier1 extends TileDewar {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		World world = this.getWorld();
+		if (!world.isRemote) {
+
+			tick++;
+			if (tick >= (400)) { //Every 5 minutes
+
+				tick = 0;
+
+				int toDrain = calculateLoss(this.tank.getFluid().getFluid(), this.insulation)/5;
+				this.tank.drain(toDrain, true);		
+
+			}
+
+
+		}
 	}
 
 }
